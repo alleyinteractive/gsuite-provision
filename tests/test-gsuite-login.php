@@ -15,6 +15,7 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$this->valid_userinfo->name = 'Test User';
 		$this->valid_userinfo->hd = 'example.com';
 		$this->valid_userinfo->verifiedEmail = 1;
+		$this->valid_userinfo->id = rand(1,10000000000000);
 
 		$this->existing_userinfo = new stdClass;
 		$this->existing_userinfo->email = 'existinguser@example.com';
@@ -23,6 +24,7 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$this->existing_userinfo->name = 'Existing User';
 		$this->existing_userinfo->hd = 'example.com';
 		$this->existing_userinfo->verifiedEmail = 1;
+		$this->existing_userinfo->id = rand(1,10000000000000);
 
 		$this->invalid_userinfo = new stdClass;
 		$this->invalid_userinfo->email = 'malicioususer@fake.com';
@@ -31,6 +33,7 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$this->invalid_userinfo->name = 'Malicious User';
 		$this->invalid_userinfo->hd = 'fake.com';
 		$this->invalid_userinfo->verifiedEmail = 1;
+		$this->invalid_userinfo->id = rand(1,10000000000000);
 
 		update_option( 'gsuite_domain', 'example.com' );
 		update_option( 'gsuite_role', 'author' );
