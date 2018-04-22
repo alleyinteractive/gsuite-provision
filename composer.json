@@ -1,0 +1,16 @@
+{
+	"name": "alleyinteractive/gsuite-provision",
+	"authors": [
+		{
+			"name": "Matt Johnson",
+			"email": "matt@alley.co"
+		}
+	],
+	"require": {
+		"google/apiclient": "^2.2"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "2.3.4",
+		"wp-coding-standards/wpcs": "0.8.0"
+	}
+}

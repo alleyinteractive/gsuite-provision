@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ruleset name="gsuite_provision">
+	<description>Sniffs for the coding standards of the GSuite Provosion plugin</description>
+
+	<exclude-pattern>tests/*</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
+
+	<rule ref="WordPress-VIP">
+		<exclude name="WordPress.VIP.SessionFunctionsUsage.session_start" />
+		<exclude name="WordPress.VIP.SessionVariableUsage.SessionVarsProhibited" />
+		<exclude name="WordPress.VIP.SuperGlobalInputUsage" />
+	</rule>
+</ruleset>
