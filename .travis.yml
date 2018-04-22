@@ -49,6 +49,7 @@ before_script:
       npm install
       composer install
       export PATH=$PATH:${PWD}/vendor/bin/
+      phpcs --config-set ./vendor/wp-codingstandards/wpcs
       # After CodeSniffer install you should refresh your path.
       phpenv rehash
     fi

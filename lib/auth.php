@@ -2,15 +2,15 @@
 // This file needs to exist as a standalone redirect target for the OAuth response.
 
 // These requires pull in the WP function stack and the Google API from composer.
-require_once '../../../../wp-load.php';
-require_once '../vendor/autoload.php';
+require_once( '../../../../wp-load.php' );
+require_once( '../vendor/autoload.php' );
 
 // We use PHP session storage here because the access token is an associate array with
 // a pretty long set of hashes -- it would be unwieldy to serialize it and pass it as a query arg.
 session_start();
 
 $client = new Google_Client();
-$client->setAuthConfig( GSuite_Provision_Settings()->auth_config() );
+$client->setAuthConfig( gsuite_provision_settings()->auth_config() );
 $client->addScope( Google_Service_Oauth2::USERINFO_EMAIL );
 
 if ( ! isset( $_GET['code'] ) ) {
