@@ -102,7 +102,7 @@ class GSuite_Provision {
 		require_once( GSUITE_PROVISION_PATH . 'vendor/autoload.php' );
 		session_start();
 		$client = new Google_Client();
-		$client->setAuthConfig( GSuite_Provision_Settings()->auth_config() );
+		$client->setAuthConfig( gsuite_provision_settings()->auth_config() );
 		$client->addScope( Google_Service_Oauth2::USERINFO_EMAIL );
 
 		if ( isset( $_SESSION['access_token'] ) && $_SESSION['access_token'] ) {
