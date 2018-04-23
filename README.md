@@ -20,7 +20,7 @@ This plugin uses Composer to manage dependencies on the Google API client, so yo
 
 ## Security Considerations
 
-This plugin grants automatic access to your site at the selected role to anyone who can authenticate via Google's single sign-on as long as their email domain matches what you enter. It is, therefore, not a wise solution for production sites. We developd this plugin at Alley to ease the hassle of granting accounts on internal development sites, wikis, and discussion boards to many people at different times.
+This plugin grants automatic access to your site at the selected role to anyone who can authenticate via Google's single sign-on as long as their email domain matches what you enter. It is, therefore, not a wise solution for production sites. We developed this plugin at Alley to ease the hassle of granting accounts on internal development sites, wikis, and discussion boards to many people at different times.
 
 The GSuite login mechanism is automatically disabled if no domain is set, or if the domain is set to "gmail.com" (since any member of the public can authenticate with a gmail.com domain).
 
