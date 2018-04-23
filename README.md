@@ -2,9 +2,11 @@
 
 This is a lightweight WordPress plugin that allows you to identify a trusted GSuite managed domain and automatcally log in your users if they have a valid account in that domain. This plugin provides just-in-time user provisioning and maps real names to WordPress's display names, if applicable.
 
+This plugin uses Composer to manage dependencies on the Google API client, so you will need ssh access to your host in order to install the dependencies (or some other way to run composer remotely).
+
 ## Setup Instructions
 
-1. Install and activate the plugin in WordPress.
+1. Install and activate the plugin in WordPress. In the plugin root, do `composer install` to add the Google API client library.
 2. Go to the [Google Cloud Developer Console](https://console.cloud.google.com) and create a new project.
 3. Add the Gmail API to it and go to the "Credentials" screen in the sidebar.
 4. Go to "Create Credentials" -> "OAuth Client ID".
