@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="gsuite_provision">
+<ruleset name="gsuite-provision">
 	<description>Sniffs for the coding standards of the GSuite Provosion plugin</description>
 
 	<exclude-pattern>tests/*</exclude-pattern>
