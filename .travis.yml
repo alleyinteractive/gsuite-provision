@@ -1,0 +1,66 @@
+sudo: false
+
+language: php
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+
+branches:
+  only:
+    - master
+
+matrix:
+  include:
+    - php: 5.6
+      env: WP_VERSION=latest
+    - php: 5.6
+      env: WP_TRAVISCI=phpcs
+    - php: 7.0
+      env: WP_VERSION=latest
+    - php: 7.1
+      env: WP_VERSION=latest
+    - php: 7.2
+      env: WP_VERSION=latest
+    - php: 7.2
+      env: WP_VERSION=nightly
+  fast_finish: true
+
+before_script:
+  # Turn off Xdebug. See https://core.trac.wordpress.org/changeset/40138.
+  - phpenv config-rm xdebug.ini || echo "Xdebug not available"
+
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+      export PATH="$HOME/.composer/vendor/bin:$PATH"
+      if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
+        composer global require "phpunit/phpunit=5.7.*"
+      else
+        composer global require "phpunit/phpunit=4.8.*"
+      fi
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      composer install
+      export PATH=$PATH:${PWD}/vendor/bin/
+      phpcs --config-set installed_paths ${PWD}/vendor/wp-coding-standards/wpcs
+      # After CodeSniffer install you should refresh your path.
+      phpenv rehash
+    fi
+
+script:
+  - find . -path ./vendor -prune -o -type "f" -iname "*.php" | xargs -L "1" php -l
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      phpunit
+    fi
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      phpunit -c multisite.xml
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      ./vendor/bin/phpcs -p -s -v -n --standard=./codesniffer.ruleset.xml --extensions=php .
+    fi
