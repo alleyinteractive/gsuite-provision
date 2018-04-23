@@ -47,17 +47,19 @@ class GSuite_Provision {
 	 */
 	public function login_footer() {
 		$gsuite = isset( $_GET['gsuite'] ) ? sanitize_text_field( wp_unslash( $_GET['gsuite'] ) ) : '';
-		if ( empty( $gsuite ) || 'disable' !== $gsuite ) { ?>
-			<script>
-				var loginForm = document.getElementById('loginform');
-				loginForm.action = '<?php echo esc_js( GSUITE_PROVISION_URL . '/lib/auth.php' ); ?>'
-				var items = loginForm.querySelectorAll('p:not(.gsuite)');
-				items.forEach((item) => {
-					item.style.display = 'none';
-				});
-				document.getElementById('nav').style.display = 'none';
-			</script>
-		<?php }
+		if ( empty( $gsuite ) || 'disable' !== $gsuite ) {
+			?>
+				<script>
+					var loginForm = document.getElementById('loginform');
+					loginForm.action = '<?php echo esc_js( GSUITE_PROVISION_URL . '/lib/auth.php' ); ?>'
+					var items = loginForm.querySelectorAll('p:not(.gsuite)');
+					items.forEach((item) => {
+						item.style.display = 'none';
+					});
+					document.getElementById('nav').style.display = 'none';
+				</script>
+			<?php
+		}
 	}
 
 	/**
@@ -88,13 +90,15 @@ class GSuite_Provision {
 	 */
 	public function login_form() {
 		$gsuite = isset( $_GET['gsuite'] ) ? sanitize_text_field( wp_unslash( $_GET['gsuite'] ) ) : '';
-		if ( 'disable' !== $gsuite ) { ?>
-			<p class="gsuite"><?php esc_html_e( 'This site allows you to log in with your GSuite credentials. If you do not have an account yet, one will be created for you using your GSuite account information.', 'gsuite_provision' ); ?></p>
-			<p class="gsuite submit">
-				<input type="submit" class="center button button-primary button-large" value="<?php esc_attr_e( 'Log in with GSuite', 'gsuite_provision' ); ?>">
-			</p>
-			<p class="gsuite center"><a href="/wp-login.php?gsuite=disable"><?php esc_html_e( 'Log in with username and password instead.', 'gsuite_provision' ); ?></a></p>
-		<?php }
+		if ( 'disable' !== $gsuite ) {
+			?>
+				<p class="gsuite"><?php esc_html_e( 'This site allows you to log in with your GSuite credentials. If you do not have an account yet, one will be created for you using your GSuite account information.', 'gsuite_provision' ); ?></p>
+				<p class="gsuite submit">
+					<input type="submit" class="center button button-primary button-large" value="<?php esc_attr_e( 'Log in with GSuite', 'gsuite_provision' ); ?>">
+				</p>
+				<p class="gsuite center"><a href="/wp-login.php?gsuite=disable"><?php esc_html_e( 'Log in with username and password instead.', 'gsuite_provision' ); ?></a></p>
+			<?php
+		}
 	}
 
 	/**
@@ -157,6 +161,8 @@ class GSuite_Provision {
 			return '/wp-login.php?gsuite=invalid';
 		}
 
+		// Intentionally breaking code standards here because these properties come from the Google API.
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 		$user = $this->get_or_create_user( $userinfo->email, $userinfo->givenName, $userinfo->familyName, $userinfo->name, $userinfo->id );
 		wp_set_auth_cookie( $user->ID, true );
 		wp_set_current_user( $user->ID );

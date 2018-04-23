@@ -34,37 +34,47 @@ class GSuite_Provision_Settings {
 	 * Outputs settings section header message.
 	 */
 	public function setting_section_header() {
-		?><p><?php esc_html_e( 'These settings apply to the GSuite Provisioning plugin. Logging via GSuite will only be available if all settings are valid.', 'gsuite_provision' ); ?></p><?php
+		?>
+			<p><?php esc_html_e( 'These settings apply to the GSuite Provisioning plugin. Logging via GSuite will only be available if all settings are valid.', 'gsuite_provision' ); ?></p>
+		<?php
 	}
 
 	/**
 	 * Outputs domain setting control.
 	 */
 	public function domain_setting() {
-		?><input type="text" class="regular-text" name="gsuite_domain" value="<?php echo esc_attr( get_option( 'gsuite_domain' ) ); ?>"><?php
+		?>
+			<input type="text" class="regular-text" name="gsuite_domain" value="<?php echo esc_attr( get_option( 'gsuite_domain' ) ); ?>">
+		<?php
 	}
 
 	/**
 	 * Outputs role setting control.
 	 */
 	public function role_setting() {
-		?><select name="gsuite_role">
-			<?php wp_dropdown_roles( get_option( 'gsuite_role' ) ); ?>
-		</select><?php
+		?>
+			<select name="gsuite_role">
+				<?php wp_dropdown_roles( get_option( 'gsuite_role' ) ); ?>
+			</select>
+		<?php
 	}
 
 	/**
 	 * Outputs client ID setting control.
 	 */
 	public function client_id_setting() {
-		?><input type="text" class="large-text" name="gsuite_client_id" value="<?php echo esc_attr( get_option( 'gsuite_client_id' ) ); ?>"><?php
+		?>
+			<input type="text" class="large-text" name="gsuite_client_id" value="<?php echo esc_attr( get_option( 'gsuite_client_id' ) ); ?>">
+		<?php
 	}
 
 	/**
 	 * Outputs cient secret setting control.
 	 */
 	public function client_secret_setting() {
-		?><input type="text" class="regular-text" name="gsuite_client_secret" value="<?php echo esc_attr( get_option( 'gsuite_client_secret' ) ); ?>"><?php
+		?>
+			<input type="text" class="regular-text" name="gsuite_client_secret" value="<?php echo esc_attr( get_option( 'gsuite_client_secret' ) ); ?>">
+		<?php
 	}
 
 	/**
@@ -80,7 +90,7 @@ class GSuite_Provision_Settings {
 				'token_uri' => 'https://accounts.google.com/o/oauth2/token',
 				'auth_provider_x509_cert_url' => 'https://www.googleapis.com/oauth2/v1/certs',
 				'redirect_uris' => [
-					GSUITE_PROVISION_URL . 'lib/auth.php'
+					GSUITE_PROVISION_URL . 'lib/auth.php',
 				],
 			],
 		];
