@@ -35,6 +35,15 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$this->invalid_userinfo->verifiedEmail = 1;
 		$this->invalid_userinfo->id = rand(1,10000000000000);
 
+		$this->gmail_userinfo = new stdClass;
+		$this->gmail_userinfo->email = 'anyone@gmail.com';
+		$this->gmail_userinfo->familyName = 'Gmail';
+		$this->gmail_userinfo->givenName = 'User';
+		$this->gmail_userinfo->name = 'Gmail User';
+		$this->gmail_userinfo->hd = 'gmail.com';
+		$this->gmail_userinfo->verifiedEmail = 1;
+		$this->gmail_userinfo->id = rand(1,10000000000000);
+
 		update_option( 'gsuite_domain', 'example.com' );
 		update_option( 'gsuite_role', 'author' );
 
@@ -68,6 +77,20 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$loc = $this->gsuite->process_userinfo( $this->invalid_userinfo );
 
 		$new_user = get_user_by( 'email', $this->invalid_userinfo->email );
+		$current_user = wp_get_current_user();
+
+		$this->assertEquals( $current_user->ID, 0 );
+		$this->assertFalse( $new_user );
+		$this->assertEquals( '/wp-login.php?gsuite=invalid', $loc );
+	}
+
+	public function test_gmail_user_rejection() {
+		// Even in a hypothetical scenario where the front-facing forms don't bail out properly.
+		update_option( 'gsuite_domain', 'gmail.com' );
+
+		$loc = $this->gsuite->process_userinfo( $this->gmail_userinfo );
+
+		$new_user = get_user_by( 'email', $this->valid_userinfo->email );
 		$current_user = wp_get_current_user();
 
 		$this->assertEquals( $current_user->ID, 0 );

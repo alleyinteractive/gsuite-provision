@@ -46,15 +46,16 @@ class GSuite_Provision {
 	 * Adds JS to the footer to hide default elements of the login form.
 	 */
 	public function login_footer() {
-		if ( empty( $_GET['gsuite'] ) || 'disable' !== $_GET['gsuite'] ) {
-		?>
+		$gsuite = isset( $_GET['gsuite'] ) ? sanitize_text_field( wp_unslash( $_GET['gsuite'] ) ) : '';
+		if ( empty( $gsuite ) || 'disable' !== $gsuite ) { ?>
 			<script>
-				document.querySelector('#loginform').action = '<?php echo esc_js( GSUITE_PROVISION_URL . '/lib/auth.php' ); ?>'
-				var items = document.querySelector('#loginform').querySelectorAll('p:not(.gsuite)');
+				var loginForm = document.getElementById('loginform');
+				loginForm.action = '<?php echo esc_js( GSUITE_PROVISION_URL . '/lib/auth.php' ); ?>'
+				var items = loginForm.querySelectorAll('p:not(.gsuite)');
 				items.forEach((item) => {
-					item.style.display = "none";
+					item.style.display = 'none';
 				});
-				document.querySelector('#nav').style.display = "none";
+				document.getElementById('nav').style.display = 'none';
 			</script>
 		<?php }
 	}
@@ -86,7 +87,8 @@ class GSuite_Provision {
 	 * Provides the alternative login form if GSuite is enabled.
 	 */
 	public function login_form() {
-		if ( empty( $_GET['gsuite'] ) || 'disable' !== $_GET['gsuite'] ) { ?>
+		$gsuite = isset( $_GET['gsuite'] ) ? sanitize_text_field( wp_unslash( $_GET['gsuite'] ) ) : '';
+		if ( 'disable' !== $gsuite ) { ?>
 			<p class="gsuite"><?php esc_html_e( 'This site allows you to log in with your GSuite credentials. If you do not have an account yet, one will be created for you using your GSuite account information.', 'gsuite_provision' ); ?></p>
 			<p class="gsuite submit">
 				<input type="submit" class="center button button-primary button-large" value="<?php esc_attr_e( 'Log in with GSuite', 'gsuite_provision' ); ?>">
@@ -126,11 +128,12 @@ class GSuite_Provision {
 	 * Maps error values to error messages.
 	 */
 	public function login_message() {
-		if ( isset( $_GET['gsuite'] ) && 'invalid' === $_GET['gsuite'] ) {
+		$gsuite = isset( $_GET['gsuite'] ) ? sanitize_text_field( wp_unslash( $_GET['gsuite'] ) ) : '';
+		if ( 'invalid' === $gsuite ) {
 			return '<div id="login_error">' . esc_html__( 'Your email domain is not authorized to access this site.', 'gsuite_provision' ) . '</div>';
 		}
 
-		if ( isset( $_GET['gsuite'] ) && 'error' === $_GET['gsuite'] ) {
+		if ( 'error' === $gsuite ) {
 			return '<div id="login_error">' . esc_html__( 'We encountered an error obtaining your information from GSuite. Please contact the site administrator.', 'gsuite_provision' ) . '</div>';
 		}
 
@@ -148,7 +151,9 @@ class GSuite_Provision {
 			return '/wp-login.php?gsuite=error';
 		}
 
-		if ( ! $userinfo->hd || get_option( 'gsuite_domain' ) !== $userinfo->hd ) {
+		$domain = get_option( 'gsuite_domain' );
+
+		if ( ! $userinfo->hd || 'gmail.com' === $domain || $domain !== $userinfo->hd ) {
 			return '/wp-login.php?gsuite=invalid';
 		}
 

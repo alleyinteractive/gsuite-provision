@@ -26,8 +26,6 @@ matrix:
     - php: 7.2
       env: WP_VERSION=latest
   fast_finish: true
-  allow_failures:
-    - php: 7.2
 
 before_script:
   # Turn off Xdebug. See https://core.trac.wordpress.org/changeset/40138.

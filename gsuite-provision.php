@@ -47,8 +47,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	wp_die( esc_html__( 'This file cannot be accessed directly', 'gsuite_provision' ) );
 }
 
-require_once( GSUITE_PROVISION_PATH . 'php/class-gsuite-provision.php' );
-require_once( GSUITE_PROVISION_PATH . 'php/class-gsuite-provision-settings.php' );
+require_once GSUITE_PROVISION_PATH . 'php/class-gsuite-provision.php';
+require_once GSUITE_PROVISION_PATH . 'php/class-gsuite-provision-settings.php';
 
 /**
  * Instantiates plugin objects.

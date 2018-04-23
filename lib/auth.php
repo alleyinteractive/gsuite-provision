@@ -5,7 +5,7 @@
 require_once( '../../../../wp-load.php' );
 require_once( '../vendor/autoload.php' );
 
-// We use PHP session storage here because the access token is an associate array with
+// We use PHP session storage here because the access token is an associative array with
 // a pretty long set of hashes -- it would be unwieldy to serialize it and pass it as a query arg.
 session_start();
 
