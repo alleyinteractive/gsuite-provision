@@ -47,7 +47,7 @@ before_script:
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       composer install
       export PATH=$PATH:${PWD}/vendor/bin/
-      phpcs --config-set installed_paths ./vendor/wp-coding-standards/wpcs
+      phpcs --config-set installed_paths ${PWD}/vendor/wp-coding-standards/wpcs
       # After CodeSniffer install you should refresh your path.
       phpenv rehash
     fi
