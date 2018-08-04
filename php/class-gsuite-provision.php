@@ -25,11 +25,11 @@ class GSuite_Provision {
 	 */
 	private static function setup() {
 		if (
-			! get_option( 'gsuite_domain' ) ||
-			! get_option( 'gsuite_client_id' ) ||
-			! get_option( 'gsuite_client_secret' ) ||
+			! get_site_option( 'gsuite_domain' ) ||
+			! get_site_option( 'gsuite_client_id' ) ||
+			! get_site_option( 'gsuite_client_secret' ) ||
 			// This is a security firewall, since setting this to 'gmail.com' would grant automatic access to the public.
-			'gmail.com' === get_option( 'gsuite_domain' )
+			'gmail.com' === get_site_option( 'gsuite_domain' )
 		) {
 			return;
 		}
@@ -155,7 +155,7 @@ class GSuite_Provision {
 			return '/wp-login.php?gsuite=error';
 		}
 
-		$domain = get_option( 'gsuite_domain' );
+		$domain = get_site_option( 'gsuite_domain' );
 
 		if ( ! $userinfo->hd || 'gmail.com' === $domain || $domain !== $userinfo->hd ) {
 			return '/wp-login.php?gsuite=invalid';
@@ -188,7 +188,7 @@ class GSuite_Provision {
 			$user_id = wp_create_user( $username, $password, sanitize_text_field( $email ) );
 			$user = get_user_by( 'ID', $user_id );
 
-			$role = get_option( 'gsuite_role', 'subscriber' );
+			$role = get_site_option( 'gsuite_role', 'subscriber' );
 
 			wp_update_user( [
 				'ID' => $user->ID,
