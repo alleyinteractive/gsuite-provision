@@ -25,7 +25,7 @@ class GSuite_Provision_Settings {
 	public function is_network_enabled() {
 		if ( is_multisite() ) {
 			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-			    require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 			}
 			if ( is_plugin_active_for_network( 'gsuite-provision/gsuite-provision.php' ) ) {
 				return true;
@@ -55,11 +55,15 @@ class GSuite_Provision_Settings {
 	 * Callback to render the network admin settings page,
 	 */
 	public function network_admin_page() {
-		?><form name="gsuite-provision" method="post" action="edit.php?action=gsuite_provision"><?php
-			settings_fields( 'gsuite-provision-network' );
-			do_settings_sections( 'gsuite-provision-network' );
-			submit_button();
-		?></form><?php
+		?>
+			<form name="gsuite-provision" method="post" action="edit.php?action=gsuite_provision">
+				<?php
+					settings_fields( 'gsuite-provision-network' );
+					do_settings_sections( 'gsuite-provision-network' );
+					submit_button();
+				?>
+			</form>
+		<?php
 	}
 
 	/**
@@ -77,13 +81,19 @@ class GSuite_Provision_Settings {
 
 		foreach ( $options as $option ) {
 			if ( isset( $_POST[ $option ] ) ) {
-				update_site_option( $option, $_POST[ $option ] );
+				update_site_option( $option, sanitize_text_field( wp_unslash( $_POST[ $option ] ) ) );
 			} else {
 				delete_site_option( $option );
 			}
 		}
 
-		wp_redirect( add_query_arg( ['page' => 'gsuite-provision-network', 'updated' => 'true' ], network_admin_url( 'settings.php' ) ) );
+		wp_redirect( add_query_arg(
+			[
+				'page' => 'gsuite-provision-network',
+				'updated' => 'true',
+			],
+			network_admin_url( 'settings.php' )
+		) );
 		exit();
 	}
 
@@ -102,7 +112,7 @@ class GSuite_Provision_Settings {
 
 		$section_title = is_network_admin() ? esc_html__( 'Network GSuite Login Settings', 'gsuite_provision' ) : esc_html__( 'GSuite Login Settings', 'gsuite_provision' );
 		add_settings_section( 'gsuite', $section_title, [ self::$instance, 'setting_section_header' ], $slug );
-		
+
 		add_settings_field( 'gsuite_domain', esc_html__( 'Authorized Domain', 'gsuite_provision' ), [ self::$instance, 'domain_setting' ], $slug, 'gsuite' );
 		add_settings_field( 'gsuite_role', esc_html__( 'Role for New Users', 'gsuite_provision' ), [ self::$instance, 'role_setting' ], $slug, 'gsuite' );
 		add_settings_field( 'gsuite_client_id', esc_html__( 'OAuth Client ID', 'gsuite_provision' ), [ self::$instance, 'client_id_setting' ], $slug, 'gsuite' );
