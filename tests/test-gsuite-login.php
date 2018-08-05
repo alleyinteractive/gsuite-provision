@@ -44,8 +44,8 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$this->gmail_userinfo->verifiedEmail = 1;
 		$this->gmail_userinfo->id = rand(1,10000000000000);
 
-		update_option( 'gsuite_domain', 'example.com' );
-		update_option( 'gsuite_role', 'author' );
+		update_site_option( 'gsuite_domain', 'example.com' );
+		update_site_option( 'gsuite_role', 'author' );
 
 		$this->gsuite = gsuite_provision();
 		$this->existing_user = $this->factory->user->create_and_get( [ 'user_email' => 'existinguser@example.com' ] );
@@ -86,7 +86,7 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 
 	public function test_gmail_user_rejection() {
 		// Even in a hypothetical scenario where the front-facing forms don't bail out properly.
-		update_option( 'gsuite_domain', 'gmail.com' );
+		update_site_option( 'gsuite_domain', 'gmail.com' );
 
 		$loc = $this->gsuite->process_userinfo( $this->gmail_userinfo );
 
