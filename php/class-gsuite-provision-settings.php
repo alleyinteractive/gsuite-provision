@@ -13,7 +13,7 @@ class GSuite_Provision_Settings {
 		if ( self::is_network_enabled() && is_network_admin() ) {
 			add_action( 'network_admin_menu', [ self::$instance, 'network_admin_menu' ] );
 			add_action( 'network_admin_edit_gsuite_provision', [ self::$instance, 'network_admin_menu_process' ] );
-		} else if ( ! self::is_network_enabled() ) {
+		} elseif ( ! self::is_network_enabled() ) {
 			// Do not show the individual site config if the plugin is network-enabled.
 			add_action( 'admin_menu', [ self::$instance, 'admin_menu' ] );
 		}
@@ -21,6 +21,7 @@ class GSuite_Provision_Settings {
 
 	/**
 	 * Helper to test if the plugin is network-enabled or not.
+	 * @return boolean
 	 */
 	public function is_network_enabled() {
 		if ( is_multisite() ) {
@@ -79,6 +80,10 @@ class GSuite_Provision_Settings {
 		global $new_whitelist_options;
 		$options = $new_whitelist_options['gsuite-provision-network'];
 
+		if ( ! is_array( $options ) ) {
+			return;
+		}
+
 		foreach ( $options as $option ) {
 			if ( isset( $_POST[ $option ] ) ) {
 				update_site_option( $option, sanitize_text_field( wp_unslash( $_POST[ $option ] ) ) );
@@ -99,6 +104,7 @@ class GSuite_Provision_Settings {
 
 	/**
 	 * Registers and adds settings.
+	 * @param string $slug The menu slug to register the settings to. Defaults to 'general'.
 	 */
 	public function admin_menu( $slug = 'general' ) {
 		if ( empty( $slug ) || '' === $slug ) {
