@@ -1,7 +1,7 @@
 <?php
 /**
  * @package GSuite_Provision
- * @version 1.0
+ * @version 1.1
  */
 /*
 Plugin Name: GSuite User Provisioning
@@ -29,7 +29,7 @@ Version: 1.0
  *
  * @var string
  */
-define( 'GSUITE_PROVISION_VERSION', '1.0' );
+define( 'GSUITE_PROVISION_VERSION', '1.1' );
 /**
  * Include path.
  *
@@ -42,6 +42,12 @@ define( 'GSUITE_PROVISION_PATH', plugin_dir_path( __FILE__ ) );
  * @var string
  */
 define( 'GSUITE_PROVISION_URL', plugin_dir_url( __FILE__ ) );
+/**
+ * Local path.
+ *
+ * @var string
+ */
+define( 'GSUITE_PROVISION_LOCAL_PATH', implode( '/', array_slice( explode( '/', __FILE__ ), -2 ) ) );
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	wp_die( esc_html__( 'This file cannot be accessed directly', 'gsuite_provision' ) );

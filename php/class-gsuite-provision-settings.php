@@ -27,7 +27,7 @@ class GSuite_Provision_Settings {
 			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 			}
-			if ( is_plugin_active_for_network( 'gsuite-provision/gsuite-provision.php' ) ) {
+			if ( is_plugin_active_for_network( GSUITE_PROVISION_LOCAL_PATH ) ) {
 				return true;
 			}
 		}

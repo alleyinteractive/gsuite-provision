@@ -96,7 +96,7 @@ class GSuite_Provision {
 				<p class="gsuite submit">
 					<input type="submit" class="center button button-primary button-large" value="<?php esc_attr_e( 'Log in with GSuite', 'gsuite_provision' ); ?>">
 				</p>
-				<p class="gsuite center"><a href="/wp-login.php?gsuite=disable"><?php esc_html_e( 'Log in with username and password instead.', 'gsuite_provision' ); ?></a></p>
+				<p class="gsuite center"><a href="<?php echo esc_url( add_query_arg( [ 'gsuite' => 'disable' ] ) ); ?>"><?php esc_html_e( 'Log in with username and password instead.', 'gsuite_provision' ); ?></a></p>
 			<?php
 		}
 	}
@@ -152,13 +152,13 @@ class GSuite_Provision {
 	 */
 	public function process_userinfo( $userinfo ) {
 		if ( ! $userinfo ) {
-			return '/wp-login.php?gsuite=error';
+			return add_query_arg( [ 'gsuite' => 'error' ], site_url( '/wp-login.php' ) );
 		}
 
 		$domain = get_site_option( 'gsuite_domain' );
 
 		if ( ! $userinfo->hd || 'gmail.com' === $domain || $domain !== $userinfo->hd ) {
-			return '/wp-login.php?gsuite=invalid';
+			return add_query_arg( [ 'gsuite' => 'invalid' ], site_url( '/wp-login.php' ) );
 		}
 
 		// Intentionally breaking code standards here because these properties come from the Google API.
@@ -166,7 +166,7 @@ class GSuite_Provision {
 		$user = $this->get_or_create_user( $userinfo->email, $userinfo->givenName, $userinfo->familyName, $userinfo->name, $userinfo->id );
 		wp_set_auth_cookie( $user->ID, true );
 		wp_set_current_user( $user->ID );
-		return '/';
+		return site_url();
 	}
 
 	/**

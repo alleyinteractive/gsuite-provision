@@ -42,6 +42,11 @@ The GSuite login mechanism is automatically disabled if no domain is set, or if 
 
 Once provisioned, users are not treated differently than manually created users. They are assigned a randomly-generated password at provisioning time. If a user's GSuite account is disabled, you will need to manually remove them from WordPress as well. While no longer having a valid GSuite account would prevent them from logging in via that method, they could still have changed their own password to something they know before their account was disabled.
 
+## Version History
+
+* 1.1: Added multisite mode support and a few code cleanup items
+* 1.0: Initial release
+
 ## Roadmap
 
 There are several features that are not supported, but could be added to this plugin, including:
