@@ -44,8 +44,8 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$this->gmail_userinfo->verifiedEmail = 1;
 		$this->gmail_userinfo->id = rand(1,10000000000000);
 
-		update_option( 'gsuite_domain', 'example.com' );
-		update_option( 'gsuite_role', 'author' );
+		update_site_option( 'gsuite_domain', 'example.com' );
+		update_site_option( 'gsuite_role', 'author' );
 
 		$this->gsuite = gsuite_provision();
 		$this->existing_user = $this->factory->user->create_and_get( [ 'user_email' => 'existinguser@example.com' ] );
@@ -61,7 +61,7 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$this->assertEquals( 'testuser', $new_user->user_login );
 		$this->assertEquals( 'Test User', $new_user->display_name );
 		$this->assertEquals( $new_user->ID, $current_user->ID );
-		$this->assertEquals( '/', $loc );
+		$this->assertEquals( home_url(), $loc );
 	}
 
 	public function test_existing_user_login() {
@@ -70,7 +70,7 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$current_user = wp_get_current_user();
 
 		$this->assertEquals( $current_user->ID, $this->existing_user->ID );
-		$this->assertEquals( '/', $loc );
+		$this->assertEquals( home_url(), $loc );
 	}
 
 	public function test_invalid_user_rejection() {
@@ -81,12 +81,12 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 
 		$this->assertEquals( $current_user->ID, 0 );
 		$this->assertFalse( $new_user );
-		$this->assertEquals( '/wp-login.php?gsuite=invalid', $loc );
+		$this->assertEquals( home_url() . '/wp-login.php?gsuite=invalid', $loc );
 	}
 
 	public function test_gmail_user_rejection() {
 		// Even in a hypothetical scenario where the front-facing forms don't bail out properly.
-		update_option( 'gsuite_domain', 'gmail.com' );
+		update_site_option( 'gsuite_domain', 'gmail.com' );
 
 		$loc = $this->gsuite->process_userinfo( $this->gmail_userinfo );
 
@@ -95,6 +95,6 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 
 		$this->assertEquals( $current_user->ID, 0 );
 		$this->assertFalse( $new_user );
-		$this->assertEquals( '/wp-login.php?gsuite=invalid', $loc );
+		$this->assertEquals( home_url() . '/wp-login.php?gsuite=invalid', $loc );
 	}
 }
