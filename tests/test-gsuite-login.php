@@ -61,7 +61,7 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$this->assertEquals( 'testuser', $new_user->user_login );
 		$this->assertEquals( 'Test User', $new_user->display_name );
 		$this->assertEquals( $new_user->ID, $current_user->ID );
-		$this->assertEquals( '/', $loc );
+		$this->assertEquals( home_url(), $loc );
 	}
 
 	public function test_existing_user_login() {
@@ -70,7 +70,7 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 		$current_user = wp_get_current_user();
 
 		$this->assertEquals( $current_user->ID, $this->existing_user->ID );
-		$this->assertEquals( '/', $loc );
+		$this->assertEquals( home_url(), $loc );
 	}
 
 	public function test_invalid_user_rejection() {
@@ -81,7 +81,7 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 
 		$this->assertEquals( $current_user->ID, 0 );
 		$this->assertFalse( $new_user );
-		$this->assertEquals( '/wp-login.php?gsuite=invalid', $loc );
+		$this->assertEquals( home_url() . '/wp-login.php?gsuite=invalid', $loc );
 	}
 
 	public function test_gmail_user_rejection() {
@@ -95,6 +95,6 @@ class Test_GSuite_Provision_Login extends WP_UnitTestCase {
 
 		$this->assertEquals( $current_user->ID, 0 );
 		$this->assertFalse( $new_user );
-		$this->assertEquals( '/wp-login.php?gsuite=invalid', $loc );
+		$this->assertEquals( home_url() . '/wp-login.php?gsuite=invalid', $loc );
 	}
 }
