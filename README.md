@@ -1,10 +1,10 @@
 # GSuite Provision
 
-This is a lightweight WordPress plugin that allows you to identify a trusted GSuite managed domain and automatcally log in your users if they have a valid account in that domain. This plugin provides just-in-time user provisioning and maps real names to WordPress's display names, if applicable.
+This is a lightweight WordPress plugin that allows you to identify a trusted GSuite-managed domain and automatcally log in your users if they have a valid account in that domain. This plugin provides just-in-time user provisioning and maps real names to WordPress's display names, if applicable.
 
 This plugin uses Composer to manage dependencies on the Google API client, so you will need ssh access to your host in order to install the dependencies (or some other way to run composer remotely).
 
-In multisite networks, if the plugin is network-enabled, then all sites on the network (including the main site) will have logging via GSuite imposed on them using the network-wide credentials configured in the network admin. In this case, see the setup instructions below for multisite networks. If the plugin is not network-enabled, it will allow each individual site on the network that enables it to set its own credentials. In this case, follow the instructions below for single sites.
+In multisite networks, if the plugin is network-enabled, then all sites on the network (including the main site) will have logging in via GSuite imposed on them using the network-wide credentials configured in the network admin. In this case, follow the setup instructions below for multisite networks. If the plugin is not network-enabled, it will allow each individual site on the network that enables it to set its own credentials. In this case, follow the instructions below for single sites.
 
 ## Setup Instructions for Single Sites
 
